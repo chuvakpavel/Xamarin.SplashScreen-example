@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:embedded="clr-namespace:Xamarin.SplashScreen_example;assembly=Xamarin.SplashScreen-example"
+             x:Class="Xamarin.SplashScreen_example.Views.MainPage">
+
+    <ContentPage.Resources>
+
+        <embedded:EmbeddedImageToImageSourceConverter x:Key="EmbeddedImageToImageSourceConverter" />
+    </ContentPage.Resources>
+
+    <StackLayout
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"
+        BackgroundColor="#0C1248">
+        <ImageButton
+            Source="{Binding Source={x:Static embedded:EmbeddedImages.IgniscorWEBP},
+                             Converter={StaticResource EmbeddedImageToImageSourceConverter}}"
+            BackgroundColor="Transparent"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"
+            Clicked="IgniscorButton_OnClicked"/>
+    </StackLayout>
+
+</ContentPage>
