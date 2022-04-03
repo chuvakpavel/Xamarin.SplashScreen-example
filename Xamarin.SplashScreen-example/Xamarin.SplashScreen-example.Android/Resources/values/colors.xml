@@ -2,4 +2,5 @@
 <resources>
     <color name="launcher_background">#0C1248</color>
 	<color name="splash_background">#0C1248</color>
+	<drawable name="bg_color">#0C1248</drawable>
 </resources>

@@ -1,45 +1,38 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.Util;
-using AndroidX.AppCompat.App;
+using Android.Animation;
+using Com.Airbnb.Lottie;
 
 namespace Xamarin.SplashScreen_example.Droid
 {
     [Activity(Theme = "@style/Igniscor.Splash", MainLauncher = true, NoHistory = true)]
-    public class SplashActivity : AppCompatActivity
+    public class SplashActivity : Activity, Animator.IAnimatorListener
     {
-        static readonly string TAG = "X:" + typeof(SplashActivity).Name;
-
-        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState, persistentState);
-            Log.Debug(TAG, "SplashActivity.OnCreate");
+            base.OnCreate(savedInstanceState);
+            SetContentView(Resource.Layout.ActivitySplashScreen);
+
+            var animationView = FindViewById<LottieAnimationView>(Resource.Id.animation_view);
+            animationView.AddAnimatorListener(this);
         }
 
-        // Launches the startup task
-        protected override void OnResume()
+        public void OnAnimationCancel(Animator animation)
         {
-            base.OnResume();
-            Task startupWork = new Task(() => { SimulateStartup(); });
-            startupWork.Start();
         }
 
-        // Simulates background work that happens behind the splash screen
-        async void SimulateStartup()
+        public void OnAnimationEnd(Animator animation)
         {
-            Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
-            await Task.Delay(8000); // Simulate a bit of startup work.
-            Log.Debug(TAG, "Startup work is finished - starting MainActivity.");
             StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+        }
+
+        public void OnAnimationRepeat(Animator animation)
+        {
+        }
+
+        public void OnAnimationStart(Animator animation)
+        {
         }
     }
 }

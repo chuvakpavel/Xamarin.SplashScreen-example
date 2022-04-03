@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Foundation;
+using Lottie.Forms.Platforms.Ios;
 using UIKit;
 
 namespace Xamarin.SplashScreen_example.iOS
@@ -22,20 +20,33 @@ namespace Xamarin.SplashScreen_example.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
-            Task startupWork = new Task(() => { SimulateStartup(); });
-            startupWork.Start();
 
-            return base.FinishedLaunching(app, options);
+            if (Window == null)
+            {
+                Window = new UIWindow(frame: UIScreen.MainScreen.Bounds);
+                var initialViewController = new SplashViewController();
+                Window.RootViewController = initialViewController;
+                Window.MakeKeyAndVisible();
+
+                return true;
+            }
+            else
+            {
+                global::Xamarin.Forms.Forms.Init();
+                
+                AnimationViewRenderer animationView = new AnimationViewRenderer();
+                animationView.Init();
+
+                System.Diagnostics.Debug.WriteLine("Finish Animate");
+
+
+                LoadApplication(new App());
+                return base.FinishedLaunching(app, options);
+            }
         }
-
-
-
-        // Simulates background work that happens behind the splash screen
-        async void SimulateStartup()
+        private async void SimulateStartup()
         {
-            await Task.Delay(8000); // Simulate a bit of startup work.
+            await Task.Delay(8000); 
         }
     }
 }
